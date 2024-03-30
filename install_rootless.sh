@@ -10,6 +10,7 @@ cp ./docker-compose.yml ~/docker/
 cd ~/docker 
 docker compose up -d && docker compose logs --follow
 
+# cp .env.example ~/docker/.env
 
 
 
