@@ -68,24 +68,15 @@ docker info | grep -A 7 "Storage Driver:"
 
 #Info
 
-You can see a number of warnings that indicate that you are running docker without root privileges. Unless you are using Docker images that require special permissions, this will not have an effect.
+#You can see a number of warnings that indicate that you are running docker without root privileges. Unless you are using Docker images that require special permissions, this will not have an effect.
 
-Enable the docker service on startup:
+#Enable the docker service on startup:
 
 systemctl --user enable docker
 
-We also need to enable lingering to make this work with rootless docker. Logout from the $user user first, then check with the second command afterwards.
+#We also need to enable lingering to make this work with rootless docker. Logout from the $user user first, then check with the second command afterwards.
 
 # CTRL+D
 sudo loginctl enable-linger $user
 sudo loginctl show-user $user
 
-
-
-
-
-
-
-    create a new non-root user named $user, without password, with its home directory set to /srv/$user
-    update /etc/subuid and /etc/subgid ranges with user $user (because e.g. the postgres container will need these to create a nested non-root user itself)
-    install docker rootless through dockerd-rootless-setuptool.sh and configure automatic service start for the $user user
