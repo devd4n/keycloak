@@ -1,10 +1,10 @@
+#!/bin/bash
 #https://du.nkel.dev/blog/2023-12-12_mastodon-docker-rootless/#docker-rootless-setup
 #The following is a note from the docs with additional information.
 #The location of systemd configuration files are different when running Docker in rootless mode. When running in rootless mode, Docker is started as a user-mode systemd service, and uses files stored in each users' home directory in ~/.config/systemd/user/docker.service.d/. In addition, systemctl must be executed without sudo and with the --user flag.
 
 user=docker_keycloak
-sudo apt-get install uidmap dbus-user-session
-systemd-container docker-ce-rootless-extras
+sudo apt install uidmap dbus-user-session systemd-container docker-ce-rootless-extras -Y
 
 sudo useradd -r -s /bin/bash -m -d /srv/$user -U $user
 
