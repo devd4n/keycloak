@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  postgres_db:
+  keycloak_db:
       container_name: keycloak_db
       image: postgres:16
       volumes:
@@ -20,7 +20,8 @@ services:
       environment:
         KC_LOG_LEVEL: debug
         KC_DB: postgres
-        KC_DB_URL: 'jdbc:postgresql://postgres_db/keycloak'
+        DB_ADDR: keycloak_db
+        #KC_DB_URL: 'jdbc:postgresql://postgres_db/keycloak'
         KC_DB_USERNAME: ${POSTGRES_USER:-keycloak}
         KC_DB_PASSWORD: ${POSTGRES_PASSWORD:-eX4mP13p455w0Rd}
         KC_DB_SCHEMA: public
@@ -33,7 +34,7 @@ services:
         KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-eX4mP13p455w0Rd}
       # command: start --optimizeda
       links:
-        - postgres_db:postgres
+        - keycloak_db:postgres
       ports:
         - "8080:8080"
         - "8443:8443"
