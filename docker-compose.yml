@@ -29,10 +29,7 @@ services:
         KC_DB_USERNAME: ${POSTGRES_USER:-keycloak}
         KC_DB_PASSWORD: ${POSTGRES_PASSWORD:-eX4mP13p455w0Rd}
         KC_DB_SCHEMA: public
-        KC_HOSTNAME: ${KC_HOSTNAME:-your.tld.com}
-        KC_HTTPS_PORT: 8443
-        KC_HTTP_PORT: 8080
-        KC_HOSTNAME_URL: "http://${KC_HOSTNAME}:8080"
+        KC_HOSTNAME_URL: "http://${KC_HOSTNAME:-your.tld.com}:8080"
         KC_HOSTNAME_ADMIN_URL: "http://${KC_HOSTNAME}:8080"
         KC_HOSTNAME_STRICT_HTTPS: false
         KC_HOSTNAME_STRICT: false
