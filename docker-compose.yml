@@ -10,6 +10,8 @@ services:
         POSTGRES_DB: keycloak
         POSTGRES_USER: ${POSTGRES_USER:-keycloak}
         POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-eX4mP13p455w0Rd}
+      ports:
+        - "5432:5432"
 
   keycloak:
       # build: .
@@ -29,9 +31,12 @@ services:
         HTTP_ADDRESS_FORWARDING: true
         KEYCLOAK_ADMIN: admin
         KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-eX4mP13p455w0Rd}
-      # command: start --optimized
+      # command: start --optimizeda
+      links:
+        - postgres_db:postgres
       ports:
-        - '127.0.0.1:8050:8080'
+        - "8080:8080"
+        - "8443:8443"
       depends_on:
         - postgres_db
       command:
