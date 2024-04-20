@@ -4,11 +4,28 @@
 #The location of systemd configuration files are different when running Docker in rootless mode. When running in rootless mode, Docker is started as a user-mode systemd service, and uses files stored in each users' home directory in ~/.config/systemd/user/docker.service.d/. In addition, systemctl must be executed without sudo and with the --user flag.
 
 user=docker_keycloak
-sudo apt install uidmap dbus-user-session systemd-container docker-ce-rootless-extras -y
+
+# Help: https://linuxhandbook.com/rootless-docker/
+sudo apt update
+sudo apt install dbus-user-session fuse-overlayfs uidmap
+
+# Install apt-add-repo utility
+sudo wget -qO /usr/bin/apt-add-repo https://raw.githubusercontent.com/devd4n/apt-add-repo/main/apt-add-repo.sh
+sudo chmod +x /usr/bin/apt-add-repo
+
+# Add Repo to trusted Repos / Repos Sources
+apt-add-repo docker-ce https://download.docker.com/linux/ubuntu https://download.docker.com/linux/ubuntu/gpg $(lsb_release -cs) stable
+sudo apt install docker-ce docker-ce-cli containerd.io docker-ce-rootless-extras -y
+
+# for machinectl command used later
+sudo apt install systemd-container -y
+
+# Disable Docker Service as root user
+sudo systemctl disable --now docker.service docker.socket
 
 sudo useradd -r -s /bin/bash -m -d /srv/$user -U $user
 
-
+# su $user
 #cat /etc/subuid
 #    opc:100000:65536
 #    ubuntu:165536:65536
@@ -31,9 +48,7 @@ machinectl shell $user@
 
 dockerd-rootless-setuptool.sh install
 
-nano ~/.bashrc
-
-Add:
+mkdir ~/docker
 
 if [ ! -f ~/.bashrc.bkp ]; then
   cp ~/.bashrc .bashrc.bkp
