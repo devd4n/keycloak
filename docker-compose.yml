@@ -4,7 +4,7 @@ services:
   postgres_db:
       image: postgres:16
       volumes:
-        - /srv/docker_keycloak/data/postgres:/var/lib/postgresql/data
+        - ${KC_STORAGE_POSTGRES:-keycloak-/srv/docker_keycloak/data/postgres}:/var/lib/postgresql/data
       environment:
         POSTGRES_DB: keycloak
         POSTGRES_USER: ${POSTGRES_USER:-keycloak}
