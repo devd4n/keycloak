@@ -34,3 +34,5 @@ services:
         - '127.0.0.1:8050:8080'
       depends_on:
         - postgres_db
+      command:
+      - start-dev
