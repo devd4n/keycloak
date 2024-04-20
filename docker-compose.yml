@@ -39,6 +39,6 @@ services:
         - "8080:8080"
         - "8443:8443"
       depends_on:
-        - postgres_db
+        - keycloak_db
       command:
       - start-dev
