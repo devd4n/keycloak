@@ -44,5 +44,4 @@ services:
         - "8443:8443"
       depends_on:
         - keycloak_db
-      command:
-      - start-dev
+      entrypoint: /opt/keycloak/bin/kc.sh start --proxy edge --hostname-strict=false
