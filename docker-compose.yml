@@ -49,7 +49,7 @@ services:
       entrypoint: /opt/keycloak/bin/kc.sh start --proxy edge --hostname-strict=false
 
 networks:
-  app_network:
-    name: ${DOCKER_APP_NETWORK}
-    external: true
+  - app_network:
+      name: ${DOCKER_APP_NETWORK}
+      external: true
     
