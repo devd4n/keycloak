@@ -43,7 +43,13 @@ services:
       links:
         - keycloak_db:postgres
       networks:
-        - ${DOCKER_APP_NETWORK}
+        - app_network
       depends_on:
         - keycloak_db
       entrypoint: /opt/keycloak/bin/kc.sh start --proxy edge --hostname-strict=false
+
+networks:
+  app_network:
+    name: ${DOCKER_APP_NETWORK}
+    external: true
+    
