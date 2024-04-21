@@ -1,29 +1,6 @@
-version: '3.8'
+version: '3'
 
 services:
-  nginx:
-    restart: always
-    image: nginx:latest
-    networks:
-      - app_network
-    ports:
-      - 443:443
-      - 80:80
-      - 8181:8181
-    volumes:
-      - ${NGINX_CONF_DIR}:/etc/nginx/conf.d/:ro
-      - ${NGINX_CERTBOT_DIR}:/var/www/certbot/:ro
-      - ${NGINX_LETSENCR_DIR}:/etc/letsencrypt/:ro
-  certbot:
-    image: certbot/certbot:latest
-    volumes:
-      - ${NGINX_CERTBOT_DIR}:/var/www/certbot/
-      - ${NGINX_LETSENCR_DIR}:/etc/letsencrypt/
-    command: >-
-      certonly --reinstall --webroot --webroot-path=/var/www/certbot
-      --email ${EMAIL} --agree-tos --no-eff-email -d ${DOMAIN}
-    depends_on:
-      - nginx
   keycloakdb:
       container_name: keycloakdb
       image: postgres:16
