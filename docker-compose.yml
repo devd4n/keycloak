@@ -42,10 +42,7 @@ services:
       # command: start --optimizeda
       links:
         - keycloak_db:postgres
-      ports:
-        - "8080:8080"
-        - "8443:8443"
-      network:
+      networks:
         - ${DOCKER_APP_NETWORK}
       depends_on:
         - keycloak_db
