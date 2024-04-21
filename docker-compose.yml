@@ -45,6 +45,8 @@ services:
       ports:
         - "8080:8080"
         - "8443:8443"
+      network:
+        - ${DOCKER_APP_NETWORK}
       depends_on:
         - keycloak_db
       entrypoint: /opt/keycloak/bin/kc.sh start --proxy edge --hostname-strict=false
