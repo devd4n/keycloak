@@ -32,7 +32,7 @@ services:
         KC_DB_SCHEMA: public
         #KC_HOSTNAME_URL: "http://${KC_HOSTNAME:-your.tld.com}:8080"
         #KC_HOSTNAME_ADMIN_URL: "http://${KC_HOSTNAME}:8080"
-        KC_HTTP_PORT: 80
+        KC_HTTP_PORT: 8080
         KC_HOSTNAME_STRICT_HTTPS: false
         KC_HOSTNAME_STRICT: false
         KC_PROXY: edge
