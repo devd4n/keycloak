@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  keycloak_db:
-      container_name: keycloak_db
+  keycloakdb:
+      container_name: keycloakdb
       image: postgres:16
       volumes:
         - ${KC_STORAGE_POSTGRES:-keycloak-/srv/docker_keycloak/data/postgres}:/var/lib/postgresql/data
@@ -10,9 +10,10 @@ services:
         POSTGRES_DB: keycloak
         POSTGRES_USER: ${POSTGRES_USER:-keycloak}
         POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-eX4mP13p455w0Rd}
+      networks:
+        - app_network
       ports:
         - "5432:5432"
-
   keycloak:
       # build: .
       container_name: keycloak
@@ -22,7 +23,7 @@ services:
         # https://www.keycloak.org/server/all-config
         KC_LOG_LEVEL: debug
         KC_DB: postgres
-        KC_DB_URL_HOST: keycloak_db
+        KC_DB_URL_HOST: keycloakdb
         KC_DB_URL_PORT: 5432
         KC_DB_URL_DATABASE: keycloak
         KC_HTTP_ENABLED: true
@@ -40,16 +41,11 @@ services:
         KEYCLOAK_ADMIN: admin
         KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:-eX4mP13p455w0Rd}
       # command: start --optimizeda
-      links:
-        - keycloak_db:postgres
       networks:
         - app_network
-      depends_on:
-        - keycloak_db
-      entrypoint: /opt/keycloak/bin/kc.sh start --proxy edge --hostname-strict=false
+      entrypoint: /opt/keycloak/bin/kc.sh start --proxy edge --hostname-strict=false --verbose
 
 networks:
-  - app_network:
-      name: ${DOCKER_APP_NETWORK}
-      external: true
-    
+  app_network:
+    name: ${DOCKER_APP_NETWORK}
+    external: true
